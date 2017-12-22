@@ -1,11 +1,8 @@
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
-  console.log('requiring dotenv for dev')
 }
-
 const express = require('express')
 const bodyParser = require('body-parser')
-const dotenv = require('dotenv').config()
 
 const server = express()
 
