@@ -28,7 +28,7 @@ const sendSMS = (to, body) => {
   })
 }
 
-const sendSMSUsingMsgService = (to, body) => {
+const sendSMSUsingCopilot = (to, body) => {
   // Initialise account credentials
   const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID
   const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN
@@ -58,5 +58,5 @@ const sendSMSUsingMsgService = (to, body) => {
 
 module.exports = {
   sendSMS,
-  sendBulkSMS
+  sendSMSUsingCopilot
 }
