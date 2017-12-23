@@ -12,6 +12,15 @@ Content-Type: application/json
 }
 ```
 
+### POST /smsCopilot
+```javascript
+Content-Type: application/json
+
+{
+  "recipient" : "+61xxxxxxxxx",
+  "message": "This is a test announcement!!"
+}
+```
 
 ## References
 ### Bulk SMS
