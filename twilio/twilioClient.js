@@ -74,7 +74,7 @@ const sendGroupSMS = (numbers, body) => {
         }
     ))
     .then(results => {
-      console.log(results)
+      // Return the message sent, the numbers delivered to and the numbers which failed
       success({ body, delivered, failed })
     })
   })
