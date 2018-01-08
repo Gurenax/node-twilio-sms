@@ -8,6 +8,7 @@ const server = express()
 
 // Middleware Plugins
 server.use(bodyParser.json())
+server.use(bodyParser.urlencoded({extended: false}));
 
 // Routes
 server.use('/', [
