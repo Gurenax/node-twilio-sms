@@ -11,9 +11,11 @@
   },
   "devDependencies": {
     "dotenv": "^4.0.0",
-    "nodemon": "^1.14.1"
+    "nodemon": "^1.14.1",
+    "now": "^9.0.1"
   },
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "start": "node server.js"
   }
 }
