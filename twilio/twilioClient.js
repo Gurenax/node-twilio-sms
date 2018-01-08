@@ -42,7 +42,7 @@ const sendSMSUsingCopilot = (to, body) => {
     client.messages.create(
       {
         to, // Recipient's number
-        from: TWILIO_NUMBER, // Twilio Number
+        messagingServiceSid: TWILIO_MESSAGING_SERVICE_SID, // Twilio Messaging SID
         body // Message to Recipient
       },
       (error, message) => {
@@ -62,7 +62,7 @@ const sendGroupSMS = (numbers, body) => {
       // For every recipient phone number
       numbers.map(async to => {
         // Send a sms message
-        await sendSMS(to, body)
+        await sendSMSUsingCopilot(to, body)
       })
       success({ numbers, body })
     } catch (error) {
