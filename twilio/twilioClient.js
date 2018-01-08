@@ -9,7 +9,7 @@ const sendSMS = (to, body) => {
   // Create new twilio client
   const client = new twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
 
-  return new Promise( (success, fail) => {
+  return new Promise((success, fail) => {
     // Send the text message.
     client.messages.create(
       {
@@ -21,7 +21,7 @@ const sendSMS = (to, body) => {
         if (error) {
           fail(error)
         } else {
-          success({to, body})
+          success({ to, body })
         }
       }
     )
@@ -37,7 +37,7 @@ const sendSMSUsingCopilot = (to, body) => {
   // Create new twilio client
   const client = new twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
 
-  return new Promise( (success, fail) => {
+  return new Promise((success, fail) => {
     // Send the text message.
     client.messages.create(
       {
@@ -49,14 +49,30 @@ const sendSMSUsingCopilot = (to, body) => {
         if (error) {
           fail(error)
         } else {
-          success({to, body})
+          success({ to, body })
         }
       }
     )
   })
 }
 
+const sendGroupSMS = (numbers, body) => {
+  return new Promise((success, fail) => {
+    try {
+      // For every recipient phone number
+      numbers.map(async to => {
+        // Send a sms message
+        await sendSMS(to, body)
+      })
+      success({ numbers, body })
+    } catch (error) {
+      fail(error)
+    }
+  })
+}
+
 module.exports = {
   sendSMS,
-  sendSMSUsingCopilot
+  sendSMSUsingCopilot,
+  sendGroupSMS
 }

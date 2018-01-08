@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { sendSMS } = require('../twilio/twilioClient')
+const { sendSMS, sendSMSUsingCopilot, sendGroupSMS } = require('../twilio/twilioClient')
 
 // POST - Send a SMS message
 router.post('/sms', (req, res) => {
@@ -19,7 +19,7 @@ router.post('/sms', (req, res) => {
 router.post('/smsCopilot', (req, res) => {
   const attributes = req.body
 
-  sendSMS(attributes.recipient, attributes.message)
+  sendSMSUsingCopilot(attributes.recipient, attributes.message)
     .then(data => {
       res.status(201).json({ data })
     })
@@ -28,5 +28,17 @@ router.post('/smsCopilot', (req, res) => {
     })
 })
 
+// POST - Send a Group SMS message
+router.post('/sendGroupSMS', (req, res) => {
+  const attributes = req.body
+
+  sendGroupSMS(attributes.recipients, attributes.message)
+    .then(data => {
+      res.status(201).json({ data })
+    })
+    .catch(error => {
+      res.status(400).json({ error })
+    })
+})
 
 module.exports = router
