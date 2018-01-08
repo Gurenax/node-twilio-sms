@@ -1,5 +1,6 @@
 const twilio = require('twilio')
 
+// Send SMS Messages directly using a Twilio Number
 const sendSMS = (to, body) => {
   // Initialise account credentials
   const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID
@@ -28,6 +29,7 @@ const sendSMS = (to, body) => {
   })
 }
 
+// Send SMS Messages using Co-pilot (Twilio Messaging Service)
 const sendSMSUsingCopilot = (to, body) => {
   // Initialise account credentials
   const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID
@@ -56,24 +58,24 @@ const sendSMSUsingCopilot = (to, body) => {
   })
 }
 
+// Send Group SMS Messages
 const sendGroupSMS = (numbers, body) => {
   return new Promise((success, fail) => {
-    const delivered = []
-    const failed = []
-    
+    const delivered = [] // List of numbers in which message is delivered successfully
+    const failed = [] // List of numbers in which message failed delivery
+
     Promise.all(
       // For every recipient phone number
-      numbers.map( to => {
-        return sendSMS(to, body)
-          .then( success => {
+      numbers.map(to => {
+        return sendSMS(to, body) // Optional: Can be changed to sendSMSUsingCopilot if using Co-pilot
+          .then(success => {
             delivered.push(to) // Message is delivered
           })
-          .catch( error => {
+          .catch(error => {
             failed.push(to) // Message not sent
           })
-        }
-    ))
-    .then(results => {
+      })
+    ).then(results => {
       // Return the message sent, the numbers delivered to and the numbers which failed
       success({ body, delivered, failed })
     })
