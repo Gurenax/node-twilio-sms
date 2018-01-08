@@ -58,16 +58,25 @@ const sendSMSUsingCopilot = (to, body) => {
 
 const sendGroupSMS = (numbers, body) => {
   return new Promise((success, fail) => {
-    try {
+    const delivered = []
+    const failed = []
+    
+    Promise.all(
       // For every recipient phone number
-      numbers.map(async to => {
-        // Send a sms message
-        await sendSMSUsingCopilot(to, body)
-      })
-      success({ numbers, body })
-    } catch (error) {
-      fail(error)
-    }
+      numbers.map( to => {
+        return sendSMS(to, body)
+          .then( success => {
+            delivered.push(to) // Message is delivered
+          })
+          .catch( error => {
+            failed.push(to) // Message not sent
+          })
+        }
+    ))
+    .then(results => {
+      console.log(results)
+      success({ body, delivered, failed })
+    })
   })
 }
 
